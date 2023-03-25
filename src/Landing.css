@@ -1,0 +1,15 @@
+.landing {
+    
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    background-color: grey;
+    height: 20rem;
+    padding-top: 13rem;
+}
+
+.comm {
+    padding-left:10px;
+}
