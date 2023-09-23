@@ -1,0 +1,96 @@
+.search-container {
+  margin: 20px;
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: flex-start; /* Align children to the start (left) */
+}
+
+.search-form label {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.search-form input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 300px;
+  padding-right: 30px;
+}
+
+.search-button {
+  margin-left: 10px;
+  margin-top: 10px;
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  max-width: 150px;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
+
+.game-list {
+  list-style: none;
+  padding: 0;
+}
+
+.game-details {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.game-details img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 10px;
+  max-height: 150px;
+}
+
+.game-details h2 {
+  font-size: 24px;
+}
+
+.game-details p {
+  max-height: 150px;
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.loading {
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.modern-game-button {
+  padding: 5px 10px;
+  font-size: 16px;
+  color: #007bff;
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: block;
+  width: auto;
+  max-width: 150px;
+  text-align: left;
+  transition: color 0.3s ease;
+  border: none;
+  background-color: transparent;
+}
+
+.modern-game-button:hover {
+  color: #0056b3;
+}

@@ -8,11 +8,6 @@ function Landing() {
         <h1>Welcome to Cutscene</h1>
         <p className="comm">Join a community of gamers &#128377;</p>
       </div>
-      <div>
-        <button>
-            Sign up
-        </button>
-      </div>
     </div>
   );
 }
