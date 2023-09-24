@@ -1,0 +1,93 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.black-column {
+  flex: 1;
+  background-color: #22007c;
+  color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  font-size: larger;
+  justify-content: center;
+}
+
+.black-icon {
+  padding-left: 10px;
+}
+
+.white-column {
+  flex: 1;
+  background-color: #f9f9f9;
+  color: #22007c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; /* Add this line to stack children vertically */
+}
+
+.login {
+  color: #22007c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; /* Add this line to stack children vertically */
+  padding-bottom: 7em;
+}
+
+.login__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left edge */
+}
+
+/* Add styles for rounded input boxes */
+.login__textBox {
+  border: none;
+  border-radius: 25px;
+  padding: 10px;
+  margin: 10px 0;
+  width: 300px; /* Adjust the width as needed */
+}
+.login__inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left edge */
+  margin-bottom: 10px; /* Add spacing between inputs and button */
+  outline: #140152;
+}
+
+.login__btn {
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  background-color: #22007c;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Make the button full width */
+  margin-bottom: 10px;
+}
+
+/* Add hover effect for buttons */
+.login__btn:hover {
+  background-color: #22007c;
+}
+
+/* Style the Google login button */
+.login__google {
+  background-color: #22007c; /* Google blue color */
+}
+
+/* Add hover effect for Google button */
+.login__google:hover {
+  background-color: #140152;
+}
+
+.forgot-pass {
+  padding-top: 5px;
+  text-decoration: none;
+  color: #22007c;
+  font-size: smaller;
+}

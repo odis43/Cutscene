@@ -55,6 +55,7 @@ const logInWithEmailAndPassword = async (email, password) => {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
     console.error(err);
+    console.log("Could not login");
     alert(err.message);
   }
 };
@@ -82,8 +83,14 @@ const sendPasswordReset = async (email) => {
     alert(err.message);
   }
 };
-const logout = () => {
-  signOut(auth);
+const logout = async () => {
+  try {
+    await signOut(auth);
+    console.log("Logged out successfully.");
+  } catch (error) {
+    console.error("Error logging out: ", error);
+    alert("Error logging out. Please try again.");
+  }
 };
 
 const Favorited = async (userId, game) => {

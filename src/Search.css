@@ -1,5 +1,4 @@
 .search-container {
-  margin: 20px;
   display: flex;
   flex-direction: column; /* Stack children vertically */
   align-items: flex-start; /* Align children to the start (left) */
@@ -43,11 +42,6 @@
   padding: 0;
 }
 
-.game-details {
-  text-align: left;
-  margin-top: 20px;
-}
-
 .game-details img {
   max-width: 100%;
   height: auto;
@@ -61,13 +55,13 @@
 }
 
 .game-details p {
-  max-height: 150px;
+  max-height: 40rem;
   overflow: auto;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   display: block;
-  width: 100%;
+  width: 55%;
   box-sizing: border-box;
 }
 
@@ -93,4 +87,46 @@
 
 .modern-game-button:hover {
   color: #0056b3;
+}
+
+.sidebar {
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background-color: #22007c;
+  color: #fff;
+  overflow-y: auto;
+  transition: width 0.3s ease;
+}
+
+.sidebar-header {
+  text-align: center;
+  margin-top: 2em;
+  margin-bottom: 5em;
+}
+.main-content {
+  padding-left: 6rem;
+  background-color: #03071e;
+  color: white;
+  height: 100em;
+}
+
+.icon-name {
+  padding-left: 20px;
+}
+
+.sidebar-table {
+  border-spacing: 0px 1em;
+  margin-left: 1em;
+  font-size: smaller;
+}
+
+.logout {
+  position: relative;
+  top: 290px;
+  margin-left: 17px;
+  font-size: small;
 }

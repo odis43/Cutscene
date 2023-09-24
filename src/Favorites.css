@@ -1,0 +1,63 @@
+.popup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+[data-popup="tooltip"].popup-overlay {
+  background: transparent;
+}
+@keyframes anvil {
+  0% {
+    transform: scale(1) translateY(0px);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+  }
+  1% {
+    transform: scale(0.96) translateY(10px);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+  }
+  100% {
+    transform: scale(1) translateY(0px);
+    opacity: 1;
+    box-shadow: 0 0 500px rgba(241, 241, 241, 0);
+  }
+}
+
+.popup-content {
+  width: auto;
+  height: auto;
+  max-height: 80%; /* Adjust the maximum height as needed */
+  overflow-y: auto; /* Add vertical scrolling if needed */
+  -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+}
+
+.modal {
+  height: 40em;
+  width: 50em;
+}
+
+/* Style the modal head (game name) */
+.modal-head {
+  font-weight: bold; /* Make the game name bold */
+  text-align: left; /* Left-align the game name */
+  margin-bottom: 10px; /* Add some margin below the game name */
+}
+
+/* Style the modal content (game description) */
+.modal-content {
+  text-align: left; /* Left-align the game description */
+}
+
+/* Style the modal paragraph */
+.modal-para {
+  margin-bottom: 10px; /* Add some margin below the paragraph */
+}
+
+/* Style the modal image */
+.modal-img {
+  max-width: 100%; /* Ensure the image scales down */
+  display: block; /* Remove any inline spacing */
+  margin-left: auto; /* Left-align the image */
+  margin-right: auto; /* Right-align the image */
+}
