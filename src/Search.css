@@ -47,11 +47,13 @@
   height: auto;
   display: block;
   margin-top: 10px;
-  max-height: 150px;
+  max-height: 300px;
+  border-radius: 5px;
 }
 
 .game-details h2 {
-  font-size: 24px;
+  font-size: 28px;
+  margin-bottom: 0;
 }
 
 .game-details p {
@@ -61,7 +63,7 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   display: block;
-  width: 55%;
+  width: 90%;
   box-sizing: border-box;
 }
 
@@ -72,8 +74,8 @@
 
 .modern-game-button {
   padding: 5px 10px;
-  font-size: 16px;
-  color: #007bff;
+  font-size: 14px;
+  color: #bfb9fe;
   margin-bottom: 10px;
   cursor: pointer;
   display: block;
@@ -86,7 +88,7 @@
 }
 
 .modern-game-button:hover {
-  color: #0056b3;
+  color: #271ba7;
 }
 
 .sidebar {
@@ -112,6 +114,7 @@
   background-color: #03071e;
   color: white;
   height: 100em;
+  overflow-y: auto;
 }
 
 .icon-name {
@@ -129,4 +132,39 @@
   top: 290px;
   margin-left: 17px;
   font-size: small;
+}
+
+.game-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  grid-gap: 10px; /* Adjust the gap between columns */
+}
+
+.description-column {
+  grid-row: span 4;
+  display: flex;
+}
+
+.description-column p {
+  padding: 10px;
+}
+
+.info-column {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+}
+
+.fav-heart {
+  border: white;
+}
+
+.image-container {
+  width: 39.5rem;
+  overflow: visible; /* Ensures the image won't exceed the specified dimensions */
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the container while maintaining its aspect ratio */
 }

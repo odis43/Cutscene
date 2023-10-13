@@ -1,59 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./Search.css";
-import { Favorited, logout } from "./firebase";
+import { Favorited, logout, unFavorited, alrFav } from "./firebase";
 import { Button } from "react-bootstrap";
 import { useAuth } from "./AuthContext";
 import { Link } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ListIcon from "@mui/icons-material/List";
 import LogoutIcon from "@mui/icons-material/Logout";
+import Heart from "@react-sandbox/heart";
+import Sidebar from "./Sidebar";
+
 import { SportsEsports } from "@mui/icons-material";
-function Sidebar() {
-  const { currUser } = useAuth();
-  // const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
-
-  // const toggleSidebar = () => {
-  //   setIsSidebarMinimized(!isSidebarMinimized);
-  // };
-
-  // const sidebarClass = isSidebarMinimized ? "sidebar minimized" : "sidebar";
-  const tableData = [
-    { icon: <FavoriteIcon />, title: "Favorites", goto: "/favorites" },
-    { icon: <ListIcon />, title: "Lists", goto: "/favorites" },
-  ];
-  return (
-    <div className="sidebar">
-      <div className="sidebar-header">
-        <SportsEsports />
-      </div>
-      <table className="sidebar-table">
-        <tbody>
-          {tableData.map((item, index) => (
-            <tr className="table-row" key={index}>
-              <Link
-                style={{ textDecoration: "none", color: "inherit" }}
-                to={item.goto}
-              >
-                <td>{item.icon}</td>
-              </Link>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <Link
-        className="logout"
-        style={{ textDecoration: "none", color: "inherit" }}
-        to="/"
-        onClick={logout}
-      >
-        <LogoutIcon />
-      </Link>
-    </div>
-  );
-}
 
 function Search() {
+  const { currUser } = useAuth();
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
@@ -61,14 +21,43 @@ function Search() {
   const [gameData, setGameData] = useState([]);
   const [dataLoad, setDataLoad] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
-
+  const [active, setActive] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
   function handleClick(id) {
     setDataLoad(true);
     setGame(id);
     setShowSuggestions(false);
   }
 
-  const { currUser } = useAuth();
+  const handleActive = (user, game) => {
+    try {
+      let isAlreadyFavorited = alrFav(user, game);
+      console.log("this game is ", isAlreadyFavorited);
+      return isAlreadyFavorited;
+    } catch (error) {
+      console.error(error);
+      setActive(false); // Handle errors gracefully
+    }
+  };
+
+  function handleFavorite(user, game) {
+    console.log("user: ", user);
+    console.log("game:", game);
+    Favorited(user, game);
+    setActive(true);
+  }
+
+  function handleUnfavorite(user, game) {
+    unFavorited(user, game);
+    setActive(false);
+  }
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent the default form submission behavior
+      // You can add your custom logic here if needed
+    }
+  };
 
   useEffect(() => {
     console.log("game changed:", game);
@@ -77,6 +66,7 @@ function Search() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+
         setGameData(data);
       })
       .catch((error) => {
@@ -108,6 +98,21 @@ function Search() {
       });
   }, [query]);
 
+  useEffect(() => {
+    const checkFavorite = async () => {
+      const favorited = await alrFav(currUser.uid, gameData);
+      if (favorited) {
+        console.log("heart is set to active");
+        setActive(true);
+      } else {
+        console.log("heart is set to inactive");
+        setActive(false);
+      }
+      setIsFavorited(favorited);
+    };
+    checkFavorite();
+  }, [currUser.uid, gameData]);
+
   return (
     <div className="main-content">
       <Sidebar />
@@ -118,6 +123,7 @@ function Search() {
             type="text"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
+            onKeyPress={handleKeyPress}
           />
         </form>
 
@@ -140,17 +146,66 @@ function Search() {
           <p className="loading">Loading...</p>
         ) : dataLoad ? (
           <div className="game-details">
-            <h2>{gameData.name}</h2>
-            <div className="game-info">
-              <p className="description">{gameData.description_raw}</p>
-              <h3 style={{ display: "inline-block" }}>
-                Metacritic: {gameData.metacritic}
-              </h3>
+            <h2 style={{ paddingBottom: "10px" }}>{gameData.name}</h2>
+            <div className="image-container">
+              <img src={gameData.background_image} alt="game" />
             </div>
-            <img src={gameData.background_image} alt="game" />
-            <Button onClick={() => Favorited(currUser.uid, gameData)}>
-              Add to favorites
-            </Button>
+            <div className="game-info">
+              <div className="description-column">
+                <p>{gameData.description_raw}</p>
+              </div>
+              <div className="info-column">
+                <div className="info-row">
+                  {gameData.metacritic ? (
+                    <h3>Metacritic: {gameData.metacritic}</h3>
+                  ) : (
+                    <h3>Metacritic: unavailable</h3>
+                  )}
+                </div>
+                <div className="info-row">
+                  <h3>Developer: {gameData.developers[0].name}</h3>
+                </div>
+                <div className="info-row">
+                  <h3>Genre: {gameData.genres[0].name}</h3>
+                </div>
+                <div className="info-row">
+                  <h3>
+                    Platforms:{" "}
+                    {gameData.platforms.map((platform, index) => (
+                      <span key={platform.id}>
+                        {index > 0 && ", "}
+                        {platform.platform.name}
+                      </span>
+                    ))}
+                  </h3>
+                </div>
+                <div className="info-row">
+                  {isFavorited ? (
+                    <Heart
+                      inactiveColor="#3a04ce"
+                      activeColor="#3a04ce"
+                      width={28}
+                      height={28}
+                      active={active}
+                      onClick={() => {
+                        handleUnfavorite(currUser.uid, gameData);
+                      }}
+                    />
+                  ) : (
+                    <Heart
+                      inactiveColor="#3a04ce"
+                      activeColor="#3a04ce"
+                      width={28}
+                      height={28}
+                      active={active}
+                      onClick={() => {
+                        handleFavorite(currUser.uid, gameData);
+                      }}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           <p className="loading"></p>

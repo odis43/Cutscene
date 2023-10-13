@@ -32,32 +32,88 @@
   -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
 }
 
-.modal {
-  height: 40em;
-  width: 50em;
+/* PopupStyles.css */
+.popup-content {
+  background-color: #03071e; /* Background color matching your color scheme */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow */
+  width: 90%; /* Set the width as needed */
+  max-width: 800px; /* Maximum width for the modal */
+  margin: 0 auto; /* Center the modal horizontally */
+  padding: 20px;
+  color: white; /* Text color */
+  border: none;
 }
 
-/* Style the modal head (game name) */
-.modal-head {
-  font-weight: bold; /* Make the game name bold */
-  text-align: left; /* Left-align the game name */
-  margin-bottom: 10px; /* Add some margin below the game name */
+.popup-header {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
-/* Style the modal content (game description) */
-.modal-content {
-  text-align: left; /* Left-align the game description */
+.popup-body {
+  font-size: 16px;
+  margin-bottom: 10px;
 }
 
-/* Style the modal paragraph */
-.modal-para {
-  margin-bottom: 10px; /* Add some margin below the paragraph */
+.popup-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px; /* Rounded corners for the image */
 }
 
-/* Style the modal image */
-.modal-img {
-  max-width: 100%; /* Ensure the image scales down */
-  display: block; /* Remove any inline spacing */
-  margin-left: auto; /* Left-align the image */
-  margin-right: auto; /* Right-align the image */
+.popup-info {
+  margin-top: 20px;
+}
+
+.popup-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 10px; /* Rounded corners for the button */
+  cursor: pointer;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto; /* Center the button horizontally */
+  transition: background-color 0.3s ease;
+}
+
+.popup-button:hover {
+  background-color: #0056b3;
+}
+
+.main-content {
+  padding-left: 6rem;
+  background-color: #03071e;
+  color: white;
+  height: 100em;
+  overflow-y: auto;
+}
+
+.favorites {
+  padding-left: 0;
+  position: relative;
+  right: 2.5rem;
+}
+
+.favButton {
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #bfb9fe; /* Text color */
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: block;
+  width: auto;
+  max-width: 150px;
+  text-align: left;
+  transition: color 0.3s ease;
+  border: none;
+  background-color: transparent; /* Transparent background */
+  border-radius: 10px; /* Rounded borders */
+}
+
+.favButton:hover {
+  color: #271ba7; /* Text color on hover */
+  background-color: #bfb9fe; /* Background color on hover */
 }

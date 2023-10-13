@@ -48,21 +48,25 @@ function Login() {
                 placeholder="Password"
               />
             </div>
-            <button onClick={logInWithEmailAndPassword} className="login__btn">
+            {/* <button onClick={logInWithEmailAndPassword} className="login__btn">
               Login
-            </button>
+            </button> */}
             <button
               className="login__btn login__google"
               onClick={signInWithGoogle}
             >
               Login with Google
             </button>
-            <Link className="forgot-pass" to="/reset">
+            {/* <Link className="forgot-pass" to="/reset">
               Forgot Password
-            </Link>
-            <h5>
-              Don't have an account? <Link to="/register">Register</Link> now.
-            </h5>
+            </Link> */}
+            {/* <h5>
+              Don't have an account?{" "}
+              <Link style={{ textDecoration: "none" }} to="/register">
+                Register
+              </Link>{" "}
+              now.
+            </h5> */}
           </div>
         </div>
       </div>

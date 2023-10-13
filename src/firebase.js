@@ -17,6 +17,7 @@ import {
   doc,
   setDoc,
   collection,
+  deleteDoc,
 } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyBv_35D_onUBgfJ1YqBOLG2ddIxmJlcvp4",
@@ -44,6 +45,9 @@ const signInWithGoogle = async () => {
         authProvider: "google",
         email: user.email,
       });
+      const userDocRef = doc(collection(db, "users"));
+      const favGamesRef = collection(userDocRef, "FavGames");
+      await addDoc(favGamesRef, {});
     }
   } catch (err) {
     console.error(err);
@@ -103,15 +107,58 @@ const Favorited = async (userId, game) => {
   if (!querySnapshot.empty) {
     console.log("Game already exists in favorites.");
     return null;
+  } else {
+    try {
+      const docRef = await addDoc(favGames, game);
+      console.log("Added ", docRef);
+      return docRef;
+    } catch (error) {
+      console.error("Error adding game to favorites: ", error);
+      throw error;
+    }
+  }
+};
+const unFavorited = async (userId, game) => {
+  const userRef = doc(db, "users", userId);
+  const favGames = collection(userRef, "FavGames");
+  const querySnapshot = await getDocs(
+    query(favGames, where("id", "==", game.id))
+  );
+
+  if (querySnapshot.empty) {
+    console.log("Game does not exist in favorites.");
+    return null;
   }
 
   try {
-    const docRef = await addDoc(favGames, game);
-    console.log("Added ", docRef);
-    return docRef;
+    const docToDelete = querySnapshot.docs[0];
+    await deleteDoc(docToDelete.ref);
+    console.log("Removed game from favorites.");
   } catch (error) {
-    console.error("Error adding game to favorites: ", error);
+    console.error("Error removing game from favorites: ", error);
     throw error;
+  }
+};
+
+const alrFav = async (userId, game) => {
+  if (!game || !game.id) {
+    console.error("Invalid game object:", game);
+    return false; // Return false or handle the error as needed
+  }
+  const userRef = doc(db, "users", userId);
+  const favGames = collection(userRef, "FavGames");
+  console.log(game);
+  console.log(userId);
+  const querySnapshot = await getDocs(
+    query(favGames, where("id", "==", game.id))
+  );
+
+  if (querySnapshot.empty) {
+    console.log("is not in the list of fav");
+    return false;
+  } else {
+    console.log("is in the list of fav");
+    return true;
   }
 };
 
@@ -141,5 +188,7 @@ export {
   sendPasswordReset,
   logout,
   Favorited,
+  unFavorited,
   getGames,
+  alrFav,
 };
