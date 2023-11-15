@@ -91,12 +91,6 @@
   overflow-y: auto;
 }
 
-.favorites {
-  padding-left: 0;
-  position: relative;
-  right: 2.5rem;
-}
-
 .favButton {
   padding: 5px 10px;
   font-size: 14px;

@@ -1,15 +1,12 @@
 import React from "react";
-import "./Landing.css";
+import Hero from "./Hero";
 
-function Landing() {
+const Landing = () => {
   return (
-    <div className="landing">
-      <div className="header">
-        <h1>Welcome to Cutscene</h1>
-        <p className="comm">Join a community of gamers &#128377;</p>
-      </div>
+    <div className="h-screen bg-[#5D3FD3]">
+      <Hero />
     </div>
   );
-}
+};
 
 export default Landing;

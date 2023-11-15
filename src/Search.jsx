@@ -117,18 +117,19 @@ function Search() {
     <div className="main-content">
       <Sidebar />
       <div className="search-container">
-        <form className="search-form">
-          <h1>add a game.</h1>
+        <form className="mt-10">
+          <h1 className="mb-4 text-2xl font-custom">add a game.</h1>
           <input
             type="text"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             onKeyPress={handleKeyPress}
+            className="input-form w-96"
           />
         </form>
 
         {showSuggestions && (
-          <ul className="game-list">
+          <ul className="game-list overflow-auto h-96 mt-5">
             {data.map((game) => (
               <li key={game.id}>
                 <button
@@ -145,13 +146,13 @@ function Search() {
         {loading ? (
           <p className="loading">Loading...</p>
         ) : dataLoad ? (
-          <div className="game-details">
+          <div className="game-details mt-6">
             <h2 style={{ paddingBottom: "10px" }}>{gameData.name}</h2>
             <div className="image-container">
               <img src={gameData.background_image} alt="game" />
             </div>
             <div className="game-info">
-              <div className="description-column">
+              <div className="description-column mt-5">
                 <p>{gameData.description_raw}</p>
               </div>
               <div className="info-column">
