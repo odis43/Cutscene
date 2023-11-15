@@ -5,6 +5,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Landing from "./Landing";
 import Favorites from "./Favorites";
+import GamePage from "./Gamepage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./AuthContext";
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/register" element={<Register />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/gamepage" element={<GamePage />} />
         </Routes>
       </Router>
     </AuthProvider>

@@ -3,16 +3,18 @@ import "./Search.css";
 import { Favorited, logout, unFavorited, alrFav } from "./firebase";
 import { Button } from "react-bootstrap";
 import { useAuth } from "./AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ListIcon from "@mui/icons-material/List";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Heart from "@react-sandbox/heart";
 import Sidebar from "./Sidebar";
-
+import GamePage from "./Gamepage";
 import { SportsEsports } from "@mui/icons-material";
+import { Navigate } from "react-router-dom";
 
 function Search() {
+  const navigate = useNavigate();
   const { currUser } = useAuth();
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
@@ -40,18 +42,6 @@ function Search() {
     }
   };
 
-  function handleFavorite(user, game) {
-    console.log("user: ", user);
-    console.log("game:", game);
-    Favorited(user, game);
-    setActive(true);
-  }
-
-  function handleUnfavorite(user, game) {
-    unFavorited(user, game);
-    setActive(false);
-  }
-
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       event.preventDefault(); // Prevent the default form submission behavior
@@ -62,12 +52,22 @@ function Search() {
   useEffect(() => {
     console.log("game changed:", game);
     const url = `https://api.rawg.io/api/games/${game}?key=758e98276d1247aba00495023362b623`;
+
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-
-        setGameData(data);
+        console.log("THIS IS THE DATA, ", data);
+        if (data && data.slug != "undefined") {
+          setGameData(data);
+          // Now that gameData is set, navigate to /gamepage
+          navigate("/gamepage", {
+            state: {
+              gameData: data,
+              isFavorited: isFavorited,
+              active: active,
+            },
+          });
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -142,75 +142,7 @@ function Search() {
             ))}
           </ul>
         )}
-
-        {loading ? (
-          <p className="loading">Loading...</p>
-        ) : dataLoad ? (
-          <div className="game-details mt-6">
-            <h2 style={{ paddingBottom: "10px" }}>{gameData.name}</h2>
-            <div className="image-container">
-              <img src={gameData.background_image} alt="game" />
-            </div>
-            <div className="game-info">
-              <div className="description-column mt-5">
-                <p>{gameData.description_raw}</p>
-              </div>
-              <div className="info-column">
-                <div className="info-row">
-                  {gameData.metacritic ? (
-                    <h3>Metacritic: {gameData.metacritic}</h3>
-                  ) : (
-                    <h3>Metacritic: unavailable</h3>
-                  )}
-                </div>
-                <div className="info-row">
-                  <h3>Developer: {gameData.developers[0].name}</h3>
-                </div>
-                <div className="info-row">
-                  <h3>Genre: {gameData.genres[0].name}</h3>
-                </div>
-                <div className="info-row">
-                  <h3>
-                    Platforms:{" "}
-                    {gameData.platforms.map((platform, index) => (
-                      <span key={platform.id}>
-                        {index > 0 && ", "}
-                        {platform.platform.name}
-                      </span>
-                    ))}
-                  </h3>
-                </div>
-                <div className="info-row">
-                  {isFavorited ? (
-                    <Heart
-                      inactiveColor="#3a04ce"
-                      activeColor="#3a04ce"
-                      width={28}
-                      height={28}
-                      active={active}
-                      onClick={() => {
-                        handleUnfavorite(currUser.uid, gameData);
-                      }}
-                    />
-                  ) : (
-                    <Heart
-                      inactiveColor="#3a04ce"
-                      activeColor="#3a04ce"
-                      width={28}
-                      height={28}
-                      active={active}
-                      onClick={() => {
-                        handleFavorite(currUser.uid, gameData);
-                      }}
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <p className="loading"></p>
-        )}
+        <p className="loading"></p>
       </div>
     </div>
   );
